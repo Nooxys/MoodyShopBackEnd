@@ -1,7 +1,6 @@
 package CiroVitiello.MoodyShopBackEnd.entities;
 
 
-
 import CiroVitiello.MoodyShopBackEnd.enums.UserRole;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -43,7 +42,7 @@ public class User implements UserDetails {
     @JsonIgnore
     private List<Review> reviews;
     @ManyToMany
-    @JoinTable(name = "user_articles",
+    @JoinTable(name = "users_articles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "article_id"))
     private List<Article> favorites;

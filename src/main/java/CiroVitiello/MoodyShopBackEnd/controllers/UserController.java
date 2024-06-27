@@ -1,15 +1,16 @@
 package CiroVitiello.MoodyShopBackEnd.controllers;
 
 
-
 import CiroVitiello.MoodyShopBackEnd.dto.ChangePasswordDTO;
 import CiroVitiello.MoodyShopBackEnd.dto.ChangePasswordResponseDTO;
 import CiroVitiello.MoodyShopBackEnd.dto.RoleChangeDTO;
 
 import CiroVitiello.MoodyShopBackEnd.dto.UpdateUserDTO;
+import CiroVitiello.MoodyShopBackEnd.entities.Cart;
 import CiroVitiello.MoodyShopBackEnd.entities.User;
 import CiroVitiello.MoodyShopBackEnd.enums.UserRole;
 import CiroVitiello.MoodyShopBackEnd.exceptions.BadRequestException;
+import CiroVitiello.MoodyShopBackEnd.services.CartService;
 import CiroVitiello.MoodyShopBackEnd.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,6 +31,9 @@ public class UserController {
 
     @Autowired
     private UserService us;
+
+    @Autowired
+    private CartService cs;
 
     @GetMapping("/me")
     public User getProfile(@AuthenticationPrincipal User currentUser) {

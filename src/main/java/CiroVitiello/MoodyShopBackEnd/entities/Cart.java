@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table
+@Table(name = "carts")
 @Data
 @NoArgsConstructor
 public class Cart {
@@ -23,16 +23,17 @@ public class Cart {
     private User user;
     @ManyToMany
     @JoinTable(name = "carts_articles",
-    joinColumns = @JoinColumn(name = "cart_id"),
-    inverseJoinColumns = @JoinColumn(name = "article_id"))
+            joinColumns = @JoinColumn(name = "cart_id"),
+            inverseJoinColumns = @JoinColumn(name = "article_id"))
     private List<Article> articles;
     private double total;
 
-    public Cart(double total) {
-        this.total = total;
+    public Cart(User user) {
+        this.user = user;
+        setTotalPrice();
     }
 
     public void setTotalPrice() {
-       this.total = articles.stream().mapToDouble(article -> article.getPrice()).sum();
+        this.total = articles.stream().mapToDouble(article -> article.getPrice()).sum();
     }
 }

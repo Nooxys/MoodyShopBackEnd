@@ -27,19 +27,20 @@ public class Article {
     @Enumerated(EnumType.STRING)
     private ArticleCategory category;
     private int quantity;
+    private String cover;
     private double averageRating;
     @OneToMany(mappedBy = "article")
     @JsonIgnore
     private List<Review> reviews;
 
 
-
-    public Article(String title, String description, double price, ArticleCategory category, int quantity) {
+    public Article(String title, String description, double price, ArticleCategory category, int quantity, String cover) {
         this.title = title;
         this.description = description;
         this.price = price;
         this.category = category;
         this.quantity = quantity;
+        this.cover = cover;
         getAverage();
     }
 

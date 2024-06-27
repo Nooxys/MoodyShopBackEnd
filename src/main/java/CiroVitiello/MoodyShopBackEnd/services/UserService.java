@@ -4,6 +4,7 @@ package CiroVitiello.MoodyShopBackEnd.services;
 import CiroVitiello.MoodyShopBackEnd.dto.ChangePasswordDTO;
 import CiroVitiello.MoodyShopBackEnd.dto.NewUserDTO;
 import CiroVitiello.MoodyShopBackEnd.dto.UpdateUserDTO;
+import CiroVitiello.MoodyShopBackEnd.entities.Cart;
 import CiroVitiello.MoodyShopBackEnd.entities.User;
 import CiroVitiello.MoodyShopBackEnd.enums.UserRole;
 import CiroVitiello.MoodyShopBackEnd.exceptions.BadRequestException;
@@ -34,6 +35,10 @@ public class UserService {
     @Autowired
     private Cloudinary cloudinaryUploader;
 
+//    @Autowired
+//    private CartService cs;
+
+
     public Page<User> getUsers(int page, int size, String sortBy) {
         if (size > 50) size = 50;
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
@@ -51,6 +56,7 @@ public class UserService {
                     throw new BadRequestException(" username " + user.getUsername() + " already  in use!");
                 });
         User newUser = new User(body.name(), body.surname(), body.username(), body.email(), bcrypt.encode(body.password()), body.birthDate());
+//        Cart newCart = new Cart(newUser);
         return this.ud.save(newUser);
     }
 
@@ -110,10 +116,14 @@ public class UserService {
         this.ud.save(found);
         return found;
     }
+
     public void findByIdAndDelete(UUID id) {
-        User found = this.findById(id);
-        this.ud.delete(found);
+        User foundUser = this.findById(id);
+//        Cart foundCart = this.cs.findById(foundUser.getCart().getId());
+//        this.cs.delete(foundCart.getId());
+        this.ud.delete(foundUser);
     }
+
     public User uploadImage(MultipartFile image, UUID userId) throws IOException {
         User found = findById(userId);
         String url = (String) cloudinaryUploader.uploader().upload(image.getBytes(), ObjectUtils.emptyMap()).get("url");
