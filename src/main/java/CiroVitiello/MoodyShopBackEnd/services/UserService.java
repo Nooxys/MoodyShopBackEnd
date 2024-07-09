@@ -162,8 +162,10 @@ public class UserService {
     }
 
     public void checkout(UUID userId) {
-        Cart found = this.findById(userId).getCart();
-        found.setArticles(null);
-        found.setTotalPrice();
+        User found = this.findById(userId);
+        Cart foundCart = found.getCart();
+        foundCart.setArticles(null);
+        foundCart.setTotalPrice();
+        this.ud.save(found);
     }
 }
