@@ -4,7 +4,6 @@ import CiroVitiello.MoodyShopBackEnd.entities.Cart;
 import CiroVitiello.MoodyShopBackEnd.entities.User;
 import CiroVitiello.MoodyShopBackEnd.services.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +24,7 @@ public class CartController {
 
     @PutMapping("{cartId}/articles/{articleId}")
     public Cart addArticleToCart(@PathVariable UUID cartId, @PathVariable UUID articleId) {
+
         return this.cs.AddArticleToCart(cartId, articleId);
     }
 

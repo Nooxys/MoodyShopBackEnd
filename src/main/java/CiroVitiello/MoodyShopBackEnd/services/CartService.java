@@ -25,8 +25,8 @@ public class CartService {
         return this.cd.findById(uuid).orElseThrow(() -> new NotFoundException(uuid));
     }
 
-    public Cart save(UUID userId) {
-        Cart cart = new Cart(us.findById(userId));
+    public Cart save() {
+        Cart cart = new Cart();
         return this.cd.save(cart);
     }
 
@@ -40,6 +40,7 @@ public class CartService {
         Cart cart = this.findById(cartId);
         cart.getArticles().remove(art);
         art.setQuantity(+1);
+        cart.setTotalPrice();
         return this.cd.save(cart);
     }
 
@@ -48,6 +49,7 @@ public class CartService {
         Cart cart = this.findById(cartId);
         cart.getArticles().remove(art);
         art.setQuantity(-1);
+        cart.setTotalPrice();
         return this.cd.save(cart);
     }
 
@@ -56,4 +58,5 @@ public class CartService {
         return this.cd.findByUser(found);
     }
 
+    
 }

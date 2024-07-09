@@ -55,8 +55,10 @@ public class UserService {
                 .ifPresent(user -> {
                     throw new BadRequestException(" username " + user.getUsername() + " already  in use!");
                 });
+        Cart newCart = new Cart();
         User newUser = new User(body.name(), body.surname(), body.username(), body.email(), bcrypt.encode(body.password()), body.birthDate());
-//        Cart newCart = new Cart(newUser);
+        newUser.setCart(newCart);
+        newCart.setUser(newUser);
         return this.ud.save(newUser);
     }
 
@@ -157,5 +159,11 @@ public class UserService {
 
     public List<User> findAdmins() {
         return ud.findByRole(UserRole.ADMIN);
+    }
+
+    public void checkout(UUID userId) {
+        Cart found = this.findById(userId).getCart();
+        found.setArticles(null);
+        found.setTotalPrice();
     }
 }

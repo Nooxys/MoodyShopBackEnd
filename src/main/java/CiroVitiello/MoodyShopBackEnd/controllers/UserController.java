@@ -6,7 +6,6 @@ import CiroVitiello.MoodyShopBackEnd.dto.ChangePasswordResponseDTO;
 import CiroVitiello.MoodyShopBackEnd.dto.RoleChangeDTO;
 
 import CiroVitiello.MoodyShopBackEnd.dto.UpdateUserDTO;
-import CiroVitiello.MoodyShopBackEnd.entities.Cart;
 import CiroVitiello.MoodyShopBackEnd.entities.User;
 import CiroVitiello.MoodyShopBackEnd.enums.UserRole;
 import CiroVitiello.MoodyShopBackEnd.exceptions.BadRequestException;
@@ -68,7 +67,12 @@ public class UserController {
         return new ChangePasswordResponseDTO("password changed!");
     }
 
+    @PutMapping("/me/checkout")
+    public void checkout(@AuthenticationPrincipal User currentUser) {
+        this.us.checkout(currentUser.getId());
 
+    }
+    
     @GetMapping
     @PreAuthorize("hasAuthority('ADMIN')")
     public Page<User> getAllUsers(@RequestParam(defaultValue = "0") int page,

@@ -2,7 +2,6 @@ package CiroVitiello.MoodyShopBackEnd.services;
 
 import CiroVitiello.MoodyShopBackEnd.dto.NewArticleDTO;
 import CiroVitiello.MoodyShopBackEnd.entities.Article;
-import CiroVitiello.MoodyShopBackEnd.entities.User;
 import CiroVitiello.MoodyShopBackEnd.exceptions.NotFoundException;
 import CiroVitiello.MoodyShopBackEnd.repositories.ArticleDAO;
 import com.cloudinary.Cloudinary;
@@ -63,9 +62,5 @@ public class ArticleService {
         this.ad.delete(found);
     }
 
-    public Page<Article> getArticlesByUser(UUID userId, Pageable pageable) {
-        User found = this.us.findById(userId);
-        return ad.findAllByUser(found, pageable);
-    }
 
 }
